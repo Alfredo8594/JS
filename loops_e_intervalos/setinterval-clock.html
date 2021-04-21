@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>Cronometro</title>
+    <style>
+      p {
+        font-family: sans-serif;
+        cursor: default;
+      }
+
+      .reloj
+      {
+        width: 15%;
+        margin: auto;
+        margin-bottom: 10px;
+        border-radius: 15px;
+        border-width: 3px;
+        border-style: solid;
+        border-color: white;
+      }
+
+      .todo
+      {
+        background-color: black;
+        color: white;
+        border-radius: 15px;
+        padding: 10px;
+        text-align: center;
+        margin-top: 20%;
+      }
+      
+      .botones
+      {
+          background-color: white;
+          border-radius: 10px;
+          width: 40%;
+          margin: auto;
+      }
+
+      .btn
+      {
+        display: inline-block;
+        margin: 3px 20px;
+      }
+
+      button
+      {
+        border-radius: 15px;
+        background-color: black;
+        color: white;
+        font-size: 130%;
+        font-family: 'Courier New', Courier, monospace;
+        outline: none;
+      }
+      button:hover
+      {
+          background-color: rgb(199, 0, 0);
+          cursor: pointer;
+      }
+      button:focus
+      {
+          background-color: rgb(99, 0, 0);
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="todo">
+        <div class="reloj">
+            <p class="clock"></p>
+        </div>
+        <div class="botones">
+            <div class="btn">
+                <button class="empezar">Empezar</button>
+            </div>
+            <div class="btn">
+                <button class="detener">Detener</button>
+            </div>
+            <div class="btn">
+                <button class="reiniciar">Reiniciar</button>
+            </div>
+            <p class="res"></p>
+        </div>
+    </div>
+    <script>
+
+        let cuenta=0;
+        let reloj='00:00:00';
+        document.querySelector('.clock').textContent = reloj;
+        let horas;
+        let minutos;
+        let segundos;
+        let crearReloj = 0;
+    
+        function retraso()
+        {
+            fInicial=Date.now();
+            fFinal=Date.now()-fInicial;
+            cuenta= Math.floor(fFinal/1000);
+        }
+    
+        function contar()
+        {
+            document.querySelector('.clock').textContent = reloj;
+            cuenta++;
+            horas= Math.floor(cuenta/3600);
+            minutos=Math.floor((cuenta%3600)/60);
+            segundos=cuenta%60;
+            
+            horas=(horas<10)?'0'+horas:horas;
+            minutos=(minutos<10)?'0'+minutos:segundos;
+            segundos=(segundos<10)?'0'+segundos:segundos;
+            
+            reloj= horas+':'+minutos+':'+segundos;
+        }
+
+
+        
+
+
+        const btnEmpezar=document.querySelector('.empezar');
+        const btnDetener=document.querySelector('.detener');
+        const btnReiniciar=document.querySelector('.reiniciar');
+
+        btnEmpezar.addEventListener('click',()=>
+        {
+            crearReloj = setInterval(contar, 1000);
+            btnEmpezar.disabled=true;
+        });
+
+        btnDetener.addEventListener('click',()=>
+        {
+            clearInterval(crearReloj);
+            btnEmpezar.disabled=false;
+        });
+
+        btnReiniciar.addEventListener('click',()=>
+        {
+            cuenta=0;
+            reloj='00:00:00';
+            document.querySelector('.clock').textContent = reloj;
+            clearInterval(crearReloj);
+            btnEmpezar.disabled=false;
+        });
+        
+        
+        retraso();
+    </script>
+  </body>
+</html>

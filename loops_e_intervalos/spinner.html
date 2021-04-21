@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+    <style>
+        html {
+        background-color: white;
+        height: 100%;
+        }
+
+        body {
+        height: inherit;
+        width: 50%;
+        background-color: rgb(0, 247, 255);
+        margin: 0 20% 0 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        
+        text-align: center;
+        }
+
+        div {
+        display: inline-block;
+        font-size: 10rem;
+        }
+    </style>
+  </head>
+  <body>
+    <p>Spinner</p>
+    <div>↻</div>
+  </body>
+  <script>
+    const spinner = document.querySelector('div');
+    let rotateCount = 0;
+    let startTime = null;
+    let rAF;
+
+    function draw(timestamp) 
+    {
+        if (!startTime) 
+        {
+            startTime = timestamp;
+        }
+        rotateCount = (timestamp - startTime) / 3;
+        rotateCount %= 360;
+        spinner.style.transform = `rotate(${rotateCount}deg)`;
+        rAF = requestAnimationFrame(draw);
+    }
+
+    
+    let estado=false;
+    const cuerpo = document.body;
+    cuerpo.addEventListener('click',()=>
+    {
+      if (estado==false) 
+      {
+        draw();
+        estado=true;
+      }else
+      {
+        cancelAnimationFrame(rAF);
+        estado=false;
+      }
+
+    });
+
+  </script>
+</html>
